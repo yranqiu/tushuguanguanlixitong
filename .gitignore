@@ -1,0 +1,1052 @@
+Enter file contents herepublic void actionPerformed(ActionEvent e)
+
+   {
+
+if(e.getSource()==itemAdmiqh)
+
+{
+
+this.dispose();
+
+In winin=new In("系统登陆");
+
+}
+
+if(e.getSource()==itemtc)
+
+{
+
+System.exit(0);
+
+}
+
+ 
+
+if(e.getSource()==itemAdmixj)
+
+{
+
+CreatAdmi creatAdmi=new CreatAdmi("管理员添加");
+
+}
+
+if(e.getSource()==itemAdmirz)
+
+{
+
+WinTable wintable=new WinTable("管理日志");
+
+}
+
+if(e.getSource()==itemBookrk)
+
+{
+
+AddInfy addInfy=new AddInfy();
+
+}
+
+if(e.getSource()==itemPersonlr)
+
+{
+
+Winpersonadd winperson=new Winpersonadd("读者添加");
+
+}
+
+if(e.getSource()==itemPersoncx)
+
+{
+
+Winpersonsearch winperson=new Winpersonsearch("读者信息查询");
+
+}
+
+if(e.getSource()==itemPersonxg)
+
+{
+
+Winpersonmodify winperson=new Winpersonmodify("读者信息修改");
+
+}
+
+if(e.getSource()==itemPersonsc)
+
+{
+
+Winpersondelete winperson=new Winpersondelete("读者删除");
+
+}
+
+if(e.getSource()==itemBookcx)
+
+{
+
+Windowjj ok=new Windowjj();
+
+}
+
+if(e.getSource()==itemchaoshi)
+
+{
+
+day win=new day(); 
+
+}
+
+if(e.getSource()==itemBorrowjs)
+
+{
+
+Borrowbook win=new Borrowbook(); 
+
+ 
+
+}
+
+if(e.getSource()==itemBorrowhs)
+
+{
+
+Returnbook win=new Returnbook(); 
+
+}
+
+  }
+
+ WinTable(String s)
+
+{
+
+super(s);
+
+try { Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+}
+
+catch(ClassNotFoundException e)
+
+{ System.out.println(""+e);
+
+}
+
+try { con=DriverManager.getConnection("jdbc:odbc:sun","123","123");
+
+sql=con.createStatement();
+
+rs=sql.executeQuery("SELECT * FROM Admirz");
+
+while(rs.next())
+
+{
+
+k++;
+
+}
+
+ 
+
+}
+
+catch(SQLException e)
+
+{ System.out.println(""+e);
+
+}
+
+try { con=DriverManager.getConnection("jdbc:odbc:sun","123","123");
+
+sql=con.createStatement();
+
+rs=sql.executeQuery("SELECT * FROM Admirz");
+
+a=new Object[k][6];
+
+while(rs.next())
+
+{
+
+for(int j=0;j<6;j++)
+
+{
+
+if(j<5)
+
+a[i][j]=rs.getString(j+1);
+
+else
+
+{
+
+a[i][j]=rs.getDouble(j+1);
+
+i++;
+
+}
+
+}
+
+}
+
+con.close();
+
+}
+
+catch(SQLException e)
+
+{ System.out.println(""+e);
+
+}
+
+table=new JTable(a,name);
+
+Container con=getContentPane();
+
+getContentPane().add(new JScrollPane(table),BorderLayout.CENTER);
+
+setBounds(120,125,700,500);
+
+setVisible(true);
+
+validate();
+
+addWindowListener(new DisposeListener());
+
+}
+
+}
+
+
+ public void actionPerformed(ActionEvent c)
+
+{
+
+String b=textUser.getText();
+
+String d=textPassword1.getText();
+
+String g=textPassword2.getText();
+
+if(c.getSource()==buttonqk)
+
+{ textUser.setText(null);
+
+textPassword1.setText(null);
+
+textPassword2.setText(null);
+
+}
+
+if(c.getSource()==buttonEnter||c.getSource()==textPassword2)
+
+{
+
+ 
+
+if(b.length()<3||b.length()>10)
+
+{
+
+JOptionPane.showMessageDialog(null,"用户名应在3~10个字符之间");
+
+textUser.setText(null);
+
+}
+
+else
+
+{
+
+try { Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+}
+
+catch(ClassNotFoundException e)
+
+{ System.out.println(""+e);
+
+}
+
+try { con=DriverManager.getConnection("jdbc:odbc:sun","123","123");
+
+sql=con.createStatement();
+
+rs=sql.executeQuery("SELECT * FROM Admi WHERE 用户名="+"'"+b+"'");
+
+ 
+
+if(rs.next())
+
+{
+
+String user=rs.getString(1);
+
+if(b.equals(user))
+
+{
+
+ JOptionPane.showMessageDialog(null,"此管理员已被注册","警告",JOptionPane.WARNING_MESSAGE);
+
+}
+
+}
+
+else
+
+{
+
+if(d.equals(g))
+
+{ 
+
+sql.executeUpdate("INSERTINTOAdmi VALUES"+"("+"'"+b+"'"+","+"'"+d+"'"+")");
+
+this.dispose();
+
+JOptionPane.showMessageDialog(null,"管理员注册成功");
+
+ }
+
+else JOptionPane.showMessageDialog(null,"两次输入密码不一致","警告",JOptionPane.ERROR_MESSAGE);
+
+}
+
+   con.close();
+
+}
+
+  catch(SQLException e)
+
+{ System.out.println(""+e);
+
+}
+
+}}
+
+}
+
+ public void windowClosing(WindowEvent e)
+
+{
+
+e.getWindow().dispose();
+
+}
+
+ public void actionPerformed(ActionEvent e)
+
+{
+
+ 
+
+if(e.getSource()==button1)        // 添加
+
+{
+
+ 
+
+String ch=text1.getText();
+
+if(ch.length()!=5){
+
+JOptionPane.showMessageDialog(null,"请输入5位图书证号！");
+
+text1.setText(null);
+
+}
+
+else{
+
+……//连接数据库
+
+String number,name,sex,dept,classes,record,insertStr;
+
+number=text1.getText();
+
+name=text2.getText();
+
+if(box1.getState()==true)
+
+ 
+
+{
+
+sex=box1.getLabel();
+
+ 
+
+}
+
+else
+
+{
+
+sex=box2.getLabel();
+
+}
+
+dept=text3.getText();
+
+classes=text4.getText();
+
+ 
+
+rs=sql.executeQuery("SELECT * FROM person WHERE 图书证号="+"'"+number+"'");
+
+if(rs.next()){
+
+JOptionPane.showMessageDialog(null,"此图书证号已存在","警告",JOptionPane.WARNING_MESSAGE);
+
+text1.setText(null);
+
+}
+
+record="("+"'"+number+"'"+","+"'"+name+"'"+","+"'"+sex+"'"+","+"'"+dept+"'"+","+"'"+classes+"'"+")";
+
+insertStr="INSERT INTO person VALUES"+record;
+
+sql.executeUpdate(insertStr);
+
+                JOptionPane.showMessageDialog(null,"添加成功！");
+
+con.close();
+
+}
+
+public void actionPerformed(ActionEvent e)
+
+ 
+
+  {
+
+if(e.getSource()==button1)    //修改
+
+ 
+
+{
+
+String ch=text1.getText();
+
+if(ch.length()!=5){
+
+JOptionPane.showMessageDialog(null,"请输入5位图书证号！");
+
+text1.setText(null);
+
+}else{
+
+try
+
+{
+
+……//连接数据库
+
+String number,name,sex,dept,classes,newnum,record,updateStr;
+
+newnum=text5.getText();
+
+number=text1.getText();
+
+name=text2.getText();
+
+if(box1.getState()==true)
+
+{
+
+sex=box1.getLabel();
+
+}
+
+else
+
+{
+
+sex=box2.getLabel();
+
+}
+
+dept=text3.getText();
+
+classes=text4.getText();
+
+sql=con.createStatement();
+
+rs=sql.executeQuery("SELECT * FROM person where 图书证号="+"'"+newnum+"'");
+
+ 
+
+if(rs.next()){
+
+rs1=sql.executeQuery("SELECT * FROM person where 图书证号="+"'"+number+"'");
+
+if(rs1.next()){
+
+JOptionPane.showMessageDialog(null,"此图书证号已存在","警告",JOptionPane.WARNING_MESSAGE);
+
+text1.setText(null);
+
+}else
+
+{
+
+ 
+
+updateStr="UPDATE person SET 图书证号="+"'"+number+"'"+","+"姓名="+"'"+name+"'"+","+"性别="+"'"+sex+"'"+","+"系别="+"'"+dept+"'"+","+"班级="+"'"+classes+"'"+"WHERE 图书证号="+"'"+newnum+"'";
+
+ 
+
+sql.executeUpdate(updateStr);
+
+JOptionPane.showMessageDialog(null,"修改成功！");
+
+}
+
+}
+
+else
+
+{
+
+JOptionPane.showMessageDialog(null,"查无此人！");
+
+}
+
+……//连接数据库
+
+con.close();
+
+}
+
+public void actionPerformed(ActionEvent e)
+
+   {       
+
+if(e.getSource()==button1 || e.getSource()==text){                    // 查询
+
+area.setText(null);
+
+if((str=="按图书证号查询" || str==null) && text.getText()!=null)
+
+{
+
+boolean flag=true,f=true;
+
+String num=text.getText();
+
+……//连接数据库
+
+ 
+
+rs=sql.executeQuery("SELECT * FROM person where 图书证号="+"'"+num+"'");
+
+    while(rs.next())
+
+{
+
+ 
+
+f=false;
+
+String number=rs.getString("图书证号");
+
+String name=rs.getString("姓名");
+
+String sex=rs.getString("性别");
+
+String dept=rs.getString("系别");
+
+String classes=rs.getString("班级");
+
+if(flag){
+
+area.append("图书证号为"+num+"的学生信息如下：");
+
+flag=false;
+
+}
+
+area.append("\n姓名："+name+"   性别："+sex+"   系别："+dept+"   班级:"+classes+"\n");
+
+}
+
+if(f){area.append("查无此人！");}
+
+}
+
+catch(SQLException c)
+
+{
+
+System.out.println(c);
+
+}
+
+}
+
+if(e.getSource()==button1){           // 删除
+
+area.setText(null);
+
+if((str=="按图书证号删除" || str==null) && text.getText()!=null) {
+
+ 
+
+String num=text.getText();
+
+try
+
+{
+
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+}
+
+catch(ClassNotFoundException c)
+
+{
+
+System.out.println(""+c);
+
+}
+
+……//连接数据库
+
+rs=sql.executeQuery("SELECT * FROM person where 图书证号="+"'"+num+"'");
+
+if(rs.next()){
+
+area.append("该信息已删除！");
+
+}
+
+String delStr="DELETE FROM person WHERE 图书证号="+"'"+num+"'";
+
+sql.executeQuery(delStr);
+
+con.close();
+
+}
+
+catch(SQLException c)
+
+{
+
+System.out.println(c);
+
+}
+
+}
+    public void actionPerformed(ActionEvent c)
+
+  { if (c.getSource()==button2)
+
+{ this.dispose();}
+
+if (c.getSource()==button1)
+
+{
+
+……//连接数据库
+
+rs=stm.executeQuery("select 书号 from book where 书号='" +textField1.getText() + "'");
+
+if (rs.next())
+
+{
+
+JOptionPane.showMessageDialog(null, "此书号已存在!", "警告",JOptionPane.WARNING_MESSAGE);
+
+return;
+
+}
+
+float m;
+
+String str1,str2,str3,str4,str6,str7,str8,str9,str10;
+
+str1=textField1.getText(); 
+
+……
+
+str10="未借出";
+
+m=Float.parseFloat(str9);
+
+ str="("+"'"+str1+"','"+str3+"','"+str8+"','"+str6+"','"+str7+"','"+str10+"',"+m+")";
+
+String insert="INSERT INTO book(书号,书名,作者,出版社,入库时间,是否借出,价格) VALUES"+str;
+
+stm.executeUpdate(insert);
+
+textField1.setText("");
+
+……
+
+JOptionPane.showMessageDialog(null, "增加信息成功!");
+
+con.close();
+
+}
+
+catch (Exception e){JOptionPane.showMessageDialog(null, "请认真检查各项!
+
+然后重试.", "异常警告",
+
+           JOptionPane.WARNING_MESSAGE);
+
+ 
+
+}
+
+       }
+public void itemStateChanged(ItemEvent e)
+
+ {  
+
+   area.setText(null)  ; 
+
+   String name=choice1.getSelectedItem();   
+
+   area.append( "                 请您在检索项中输入您要查找的内容  ： ");
+
+ }
+
+   public void actionPerformed(ActionEvent e)
+
+{
+
+ if (e.getSource()==button2)              //取消键
+
+    {    text1.setText(null);}
+
+    else if (e.getSource()==button3)        //返回键
+
+     {   this.dispose(); }
+
+else if (e.getSource()==button4)       // 查看全库      
+
+          {    Connection con;
+
+             Statement  sql;
+
+                 ResultSet rs; 
+
+                try                                          //建立数据源
+
+             { Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");}
+
+   catch(ClassNotFoundException c)
+
+         {System.out.println(""+c);}
+
+                try 
+
+             {
+
+            con=DriverManager.getConnection("jdbc:odbc:sun","","");
+
+            sql=con.createStatement();     
+
+                      rs=sql.executeQuery("select * from book ");
+
+while   (rs.next())            
+
+              {
+
+               String bookname=rs.getString("书名");
+
+            String auther=rs.getString("作者");
+
+            String chubanshe=rs.getString("出版社");
+
+            String bookno=rs.getString("书号");
+
+                String data=rs.getString("入库时间");
+
+            String yesorno=rs.getString("是否借出");               area.append("\n书号:"+bookno);   
+
+                   area.append("   书名:"+bookname);             area.append("   作者:"+auther);  
+
+        area.append("   出版社:"+chubanshe);
+
+ 
+
+                  
+
+                       area.append("   \n入库时间:"+data);       area.append("   是否借出:"+yesorno); } 
+
+             con.close();    
+
+           }  
+
+           catch(SQLException c)
+
+   { System.out.println(""+c);}
+
+        }
+public void actionPerformed(ActionEvent e)
+
+{
+
+if(e.getSource()==tj)
+
+{
+
+if(!tscard.getText().equals(null)&&!tsid.getText().equals(null))
+
+{
+
+String str1,str2;
+
+str1=tsid.getText();
+
+str2=tscard.getText();
+
+try
+
+{
+
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+}
+
+catch(ClassNotFoundException c)
+
+{
+
+System.out.println(""+c);
+
+}
+
+……//连接数据库
+
+rs=sql.executeQuery("SELECT * FROM person where 图书证号="+"'"+str2+"'");
+
+String ls1=null,ls2=null,ls3=null;
+
+int is1=0;
+
+if(rs.next())
+
+{
+
+ls2=str2;
+
+}
+
+con.close();
+
+……//连接数据库
+
+rs=sql.executeQuery("SELECT * FROM book where 书号="+"'"+str1+"'");
+
+if(rs.next())
+
+{
+
+if(rs.getString("是否借出").equals("未借出"))
+
+ls1=str1;
+
+ls3=rs.getString("书名");
+
+}
+
+con.close();
+
+……//连接数据库
+
+ 
+
+rs=sql.executeQuery("SELECT count(书号) FROM borrowbook where 图书
+
+ 
+
+证号="+"'"+str1+"'");
+
+rs.next();
+
+is1=rs.getInt(1);
+
+con.close();
+
+……//连接数据库
+
+if(ls1==str1&&ls2==str2&&is1<5)
+
+{  Date da=new Date();
+
+int y=da.getYear()+1900;
+
+int m=da.getMonth()+1;
+
+int d=da.getDate();
+
+              String jyrq=String.valueOf(y)+"-"+String.valueOf(m)+"-"+String.valueOf(d);
+
+……//计算借阅时间
+
+String yhrq=String.valueOf(y)+"-"+String.valueOf(m)+"-"+String.valueOf(d);
+
+String insertstr="INSERT INTO borrowbook VALUES ('"+ls2+"','"+ls1+"','"+jyrq+"','"+yhrq+"')";
+
+String updatestr="UPDATE book SET 是否借出='借出' WHERE 书号="+"'"+str1+"'";
+
+String insertstr2="INSERT INTO Admirz VALUES('"+ls1+"','"+ls3+"','"+ls2+"','借书','"+jyrq+"',0)";
+
+sql.executeUpdate(insertstr);
+
+sql.executeUpdate(insertstr2);
+
+sql.executeUpdate(updatestr);
+
+JOptionPane.showMessageDialog(this,"借阅成功请在"+yhrq+"之前退还,否则将支付滞纳金","图书借阅成功 ",JOptionPane.WARNING_MESSAGE);
+
+tsid.setText(null);
+
+tscard.setText(null);
+
+}
+
+public void actionPerformed(ActionEvent e)
+
+{
+
+if(e.getSource()==tj)
+
+        {
+
+String num=tsid.getText();
+
+int jc;
+
+try
+
+{
+
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+}
+
+catch(ClassNotFoundException c)
+
+{
+
+System.out.println(""+c);
+
+}
+
+try
+
+{ String tsz=null;
+
+……//连接数据库
+
+rs=sql.executeQuery("SELECT * FROM person where 图书证号=(SELECT 图书证号 FROM borrowbook where 书号="+"'"+num+"')");
+
+if(rs.next())
+
+ 
+
+          {
+
+tsz=rs.getString("图书证号");
+
+}
+
+con.close();
+
+……//连接数据库
+
+rs=sql.executeQuery("SELECT * FROM vbbook where 书号="+"'"+num+"'");
+
+                Date da=new Date();
+
+int y=da.getYear()+1900;
+
+int m=da.getMonth()+1;
+
+int d=da.getDate();
+
+String czrq=String.valueOf(y)+"-"+String.valueOf(m)+"-"+String.valueOf(d);
+
+float money;
+
+String sm=null;
+
+int day=0;
+
+if(rs.next())
+
+{
+
+sm=rs.getString("书名");
+
+String yhrq=rs.getString("应还日期");
+
+y=(y-Integer.parseInt(yhrq.substring(0,4)));
+
+int mm=Integer.parseInt(yhrq.substring(5,7));
+
+day=y;
+
+d=Integer.parseInt(yhrq.substring(8,10))-d;
+
+if(y!=0)
+
+mm=mm+12;
+
+while(m>mm)
+
+{
+
+…//计算还书时间
+
+}
+
+day=day+d;
+
+if(day>0)
+
+{
+
+JOptionPane.showMessageDialog(this,"您比应还日期晚了"+String.valueOf(day)+"天归还,请交付相应滞纳金","延期还书",JOptionPane.WARNING_MESSAGE);
+
+money=day/10;
+
+tsid.setText(null);
+
+}
+
+}
+……//连接数据库
+Date nowtime=new Date();//当前日期
+SimpleDateFormat matter1=new SimpleDateFormat("yyyy-MM-dd");
+String stime=matter1.format(nowtime);
+String dyear=stime.substring(0,4);
+year2=Integer.parseInt(dyear);//年
+String dmoon=stime.substring(5,7);
+moon2=Integer.parseInt(dmoon);//月
+String dday=stime.substring(8,10);
+day2=Integer.parseInt(dday);//日
+rs=sql.executeQuery("SELECT * FROM borrowbook");
+while(rs.next()){x=x+1;}
+rs.beforeFirst();
+a=new Object[x][4];
+while(rs.next())
+{
+……//计算还书超过的天数
+table=new JTable(a,name);
+sPanel.add(new JScrollPane(table),BorderLayout.CENTER);
+sPanel.setEnabled(false);
+setBounds(0,0,700,400);
+    setVisible(true);
+validate();
+addWindowListener(new WindowAdapter()
+ 
+{
+public void windowClosing(WindowEvent e)
+{dispose();
+}
+}
+  }
